@@ -101,5 +101,8 @@ class Entry extends AbstractEntity
         return $this->images;
     }
 
-
+  public function setHidden(bool $hidden)
+  {
+    $this->hidden = $hidden;
+  }
 }
