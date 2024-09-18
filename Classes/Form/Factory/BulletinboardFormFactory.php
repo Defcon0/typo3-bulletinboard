@@ -23,10 +23,10 @@ use TYPO3\CMS\Form\Domain\Model\FormElements\Section;
 use TYPO3\CMS\Form\Domain\Renderer\FluidFormRenderer;
 use TYPO3\CMS\Form\Mvc\Validation\FileSizeValidator;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use WapplerSystems\FormExtended\Domain\Finishers\AttachUploadsToObjectFinisher;
-use WapplerSystems\FormExtended\Mvc\Validation\FileCollectionSizeValidator;
-use WapplerSystems\FormExtended\Mvc\Validation\FileCountValidator;
+use WapplerSystems\WsBulletinboard\Domain\Finishers\AttachUploadsToObjectFinisher;
 use WapplerSystems\WsBulletinboard\Exception\MissingConfigurationException;
+use WapplerSystems\WsBulletinboard\Mvc\Validation\FileCollectionSizeValidator;
+use WapplerSystems\WsBulletinboard\Mvc\Validation\FileCountValidator;
 
 class BulletinboardFormFactory extends AbstractFormFactory
 {
@@ -45,7 +45,6 @@ class BulletinboardFormFactory extends AbstractFormFactory
      */
     public function build(array $configuration, string $prototypeName = null): FormDefinition
     {
-
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $prototypeConfiguration = $configurationService->getPrototypeConfiguration('bulletinboard');
 
@@ -210,7 +209,11 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $element = $fieldset->createElement('title', 'Text');
         $element->setLabel('Title');
         $element->setProperty('required', true);
-        $element->addValidator(new StringLengthValidator(['maximum' => 500]));
+
+        $stringLengthValidator = new StringLengthValidator();
+        $stringLengthValidator->setOptions(['maximum' => 500]);
+
+        $element->addValidator($stringLengthValidator);
         $element->addValidator(new NotEmptyValidator());
 
         $element = $fieldset->createElement('images', 'FileUpload');
@@ -242,13 +245,19 @@ class BulletinboardFormFactory extends AbstractFormFactory
         }
 
         if ($maxSizePerFile > 0) {
-            //$element->addValidator(new FileSizeValidator(['maximum' => $maxUploadFileSize . 'K']));
+            $fileSizeValidator = new FileSizeValidator();
+          $fileSizeValidator->setOptions(['minimum' => '0K', 'maximum' => $maxUploadFileSize . 'K']);
+            $element->addValidator($fileSizeValidator);
             $fluidAdditionalAttributes['data-min-filesize-per-file'] = 0;
             $fluidAdditionalAttributes['data-max-filesize-per-file'] = $maxSizePerFile * 1024;
         }
-        $element->addValidator(new FileCollectionSizeValidator(['maximum' => $maxUploadFileSize . 'K']));
+
+        $fileCollectionSizeValidator = new FileCollectionSizeValidator();
+        $fileCollectionSizeValidator->setOptions(['minimum' => '0K', 'maximum' => $maxUploadFileSize . 'K']);
+
+        $element->addValidator($fileCollectionSizeValidator);
         if ($maxFiles > 0) {
-            //$element->addValidator(new FileCountValidator(['maximum' => 4]));
+            $element->addValidator(new FileCountValidator(['minimum' => 0, 'maximum' => 4]));
             $fluidAdditionalAttributes['data-min-files'] = 0;
             $fluidAdditionalAttributes['data-max-files'] = $maxFiles;
             $fluidAdditionalAttributes['data-msg-files-limit'] = LocalizationUtility::translate('msg.filesLimit', 'WsBulletinboard', [0, $maxFiles]);
@@ -262,7 +271,11 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $element->setProperty('elementClassAttribute', 'form-control-bstextcounter');
         $element->setProperty('fluidAdditionalAttributes', ['maxlength' => (int)($configuration['fields']['message']['maxCharacters'] ?? PHP_INT_MAX), 'minlength' => (int)($configuration['fields']['message']['minCharacters'] ?? 0)]);
         $element->addValidator(new NotEmptyValidator());
-        $element->addValidator(new StringLengthValidator(['minimum' => (int)($configuration['fields']['message']['minCharacters'] ?? 50), 'maximum' => (int)($configuration['fields']['message']['maxCharacters'] ?? PHP_INT_MAX)]));
+
+        $stringLengthValidator = new StringLengthValidator();
+        $stringLengthValidator->setOptions(['minimum' => (int)($configuration['fields']['message']['minCharacters'] ?? 50), 'maximum' => (int)($configuration['fields']['message']['maxCharacters'] ?? PHP_INT_MAX)]);
+
+        $element->addValidator($stringLengthValidator);
 
 
         $this->triggerFormBuildingFinished($formDefinition);
