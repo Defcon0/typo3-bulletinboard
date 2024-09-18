@@ -66,7 +66,7 @@ class BulletinboardController extends AbstractController
             ]);
         }
 
-        $assignedValues = $this->emitActionSignal(self::class, __FUNCTION__, $assignedValues);
+//        $assignedValues = $this->emitActionSignal(self::class, __FUNCTION__, $assignedValues);
 
         $this->view->assignMultiple($assignedValues);
 
@@ -93,7 +93,7 @@ class BulletinboardController extends AbstractController
         ];
         $assignedValues['entries'] = $entries->toArray();
 
-        $assignedValues = $this->emitActionSignal(self::class, __FUNCTION__, $assignedValues);
+//        $assignedValues = $this->emitActionSignal(self::class, __FUNCTION__, $assignedValues);
 
         $this->view->assignMultiple($assignedValues);
 
