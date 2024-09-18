@@ -199,9 +199,9 @@ class BulletinboardController extends AbstractController
         if (!$userAspect->isLoggedIn() || $entry->getFeUser()->getUid() !== $userAspect->get('id')) {
 
             $this->addFlashMessage(
-                LocalizationUtility::translate('msg.notOwner', 'ws_bulletinboard'),
-                LocalizationUtility::translate('title.error', 'ws_bulletinboard'),
-                AbstractMessage::ERROR,
+                LocalizationUtility::translate('msg.notOwner', 'WsBulletinboard'),
+                LocalizationUtility::translate('title.error', 'WsBulletinboard'),
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR,
                 true
             );
 
@@ -215,9 +215,9 @@ class BulletinboardController extends AbstractController
         $cacheManager->flushCachesInGroupByTag('pages', 'ws_bulletinboard');
 
         $this->addFlashMessage(
-            LocalizationUtility::translate('msg.successfulDeleted', 'ws_bulletinboard'),
-            LocalizationUtility::translate('title.success', 'ws_bulletinboard'),
-            AbstractMessage::OK,
+            LocalizationUtility::translate('msg.successfulDeleted', 'WsBulletinboard'),
+            LocalizationUtility::translate('title.success', 'WsBulletinboard'),
+            \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK,
             true
         );
 

@@ -30,8 +30,8 @@ class Entry extends AbstractEntity
 
     /**
      * @var ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
      */
+    #[\TYPO3\CMS\Extbase\Annotation\ORM\Cascade(['value' => 'remove'])] // remove
     protected $images = null;
 
     /**
@@ -101,7 +101,7 @@ class Entry extends AbstractEntity
         return $this->images;
     }
 
-  public function setHidden(bool $hidden)
+  public function setHidden(bool $hidden): void
   {
     $this->hidden = $hidden;
   }

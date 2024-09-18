@@ -39,7 +39,7 @@ class EntryRepository extends Repository
         return $query->execute()->getFirst();
     }
 
-    public function removeOlderThan($timestamp) {
+    public function removeOlderThan($timestamp): void {
 
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(true);
@@ -59,7 +59,7 @@ class EntryRepository extends Repository
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function remove($object)
+    public function remove($object): void
     {
 
         $images = $object->getImages();

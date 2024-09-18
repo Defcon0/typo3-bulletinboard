@@ -6,7 +6,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use WapplerSystems\WsBulletinboard\Controller\BulletinboardController;
 
-defined('TYPO3_MODE') or die();
+defined('TYPO3') or die();
 
 ExtensionUtility::configurePlugin(
     'ws_bulletinboard',

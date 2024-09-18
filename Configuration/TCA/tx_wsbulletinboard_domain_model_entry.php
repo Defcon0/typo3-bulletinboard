@@ -6,7 +6,6 @@ return [
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
         'sortby' => 'crdate DESC',
         'versioningWS' => true,
@@ -21,9 +20,6 @@ return [
         'searchFields' => 'title,message',
         'iconfile' => 'EXT:ws_bulletinboard/Resources/Public/Icons/tx_wsbulletinboard_domain_model_entry.gif'
     ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, fe_user, images, message, action_key',
-    ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, tstamp, title, fe_user, images, message, action_key, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
@@ -36,29 +32,16 @@ return [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple'
-                    ],
-                ],
-                'default' => 0,
-            ]
+            'config' => ['type' => 'language']
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => 1,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0],
+                    ['label' => '', 'value' => 0],
                 ],
                 'foreign_table' => 'tx_wsbulletinboard_domain_model_entry',
                 'foreign_table_where' => 'AND tx_wsbulletinboard_domain_model_entry.pid=###CURRENT_PID### AND tx_wsbulletinboard_domain_model_entry.sys_language_uid IN (-1,0)',
@@ -86,8 +69,7 @@ return [
                 'default' => 1,
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
                         'invertStateDisplay' => false
                     ]
                 ],
@@ -97,9 +79,7 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+                'type' => 'datetime',
                 'default' => 0,
                 'behaviour' => [
                     'allowLanguageSynchronization' => true
@@ -110,9 +90,7 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+                'type' => 'datetime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
@@ -126,9 +104,7 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:date',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+                'type' => 'datetime',
                 'default' => 0,
                 'readOnly' => true,
             ]
@@ -139,14 +115,14 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required'
+                'eval' => 'trim',
+                'required' => true
             ],
         ],
         'fe_user' => [
             'label' => 'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:tx_wsbulletinboard_domain_model_entry.fe_user',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'fe_users',
                 'maxitems' => 1,
                 'minitems' => 0,
@@ -218,10 +194,6 @@ return [
                 ],
                 'appearance' => [
                     'useSortable' => true,
-                    'headerThumbnail' => [
-                        'field' => 'uid_local',
-                        'height' => '45m',
-                    ],
                     'enabledControls' => [
                         'info' => true,
                         'new' => false,

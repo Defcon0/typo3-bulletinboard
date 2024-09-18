@@ -231,7 +231,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $fluidAdditionalAttributes = [
             'data-min-filesize' => 0,
             'data-max-filesize' => $maxUploadFileSize * 1024,
-            'data-msg-filesize-exceeded' => LocalizationUtility::translate('msg.filesizeExceeded', 'ws_bulletinboard', [$this->bytesToString($maxUploadFileSize * 1024)]),
+            'data-msg-filesize-exceeded' => LocalizationUtility::translate('msg.filesizeExceeded', 'WsBulletinboard', [$this->bytesToString($maxUploadFileSize * 1024)]),
         ];
 
         $maxFiles = (int)($configuration['fields']['images']['maxFiles'] ?? 0);
@@ -251,7 +251,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
             //$element->addValidator(new FileCountValidator(['maximum' => 4]));
             $fluidAdditionalAttributes['data-min-files'] = 0;
             $fluidAdditionalAttributes['data-max-files'] = $maxFiles;
-            $fluidAdditionalAttributes['data-msg-files-limit'] = LocalizationUtility::translate('msg.filesLimit', 'ws_bulletinboard', [0, $maxFiles]);
+            $fluidAdditionalAttributes['data-msg-files-limit'] = LocalizationUtility::translate('msg.filesLimit', 'WsBulletinboard', [0, $maxFiles]);
         }
         $element->setProperty('fluidAdditionalAttributes', $fluidAdditionalAttributes);
 

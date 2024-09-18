@@ -11,7 +11,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class FileReferenceHook
 {
 
-    public function processCmdmap_preProcess($command, $table, $id, $fieldArray, $dataHandler, $pasteUpdate)
+    public function processCmdmap_preProcess($command, $table, $id, $fieldArray, $dataHandler, $pasteUpdate): void
     {
 
         if ($table === 'tx_wsbulletinboard_domain_model_entry' && $command === 'delete') {
