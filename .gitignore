@@ -2,4 +2,5 @@
 .idea
 .ddev
 vendor
+public
 .php_cs.cache
