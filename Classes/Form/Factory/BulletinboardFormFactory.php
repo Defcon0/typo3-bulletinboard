@@ -64,8 +64,14 @@ class BulletinboardFormFactory extends AbstractFormFactory
 
         $actionKey = GeneralUtility::makeInstance(Random::class)->generateRandomHexString(30);
 
-
         $context = GeneralUtility::makeInstance(Context::class);
+
+        $recipients = [];
+        $recipientsFlexform = $configuration['verification']['recipients'] ?: [];
+
+        foreach ($recipientsFlexform as $recipient) {
+          $recipients[$recipient['container']['address']] = $recipient['container']['name'];
+        }
 
         /** @var SaveToDatabaseFinisher $saveToDatabaseFinisher */
         $saveToDatabaseFinisher = $formDefinition->createFinisher('SaveToDatabase');
@@ -86,7 +92,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
                     'value' => $actionKey,
                 ],
                 'hidden' => [
-                    'value' => ($configuration['automaticApproval'] === '1') ? 0 : 1,
+                    'value' => ($configuration['automaticApproval'] === '1' || empty($recipients)) ? 0 : 1,
                 ],
                 'fe_user' => [
                     'value' => $context->getPropertyFromAspect('frontend.user', 'id'),
@@ -120,17 +126,6 @@ class BulletinboardFormFactory extends AbstractFormFactory
                 ],
             ]
         ]);
-
-
-        $recipients = [];
-        $recipientsFlexform = $configuration['verification']['recipients'];
-        foreach ($recipientsFlexform as $recipient) {
-            $recipients[$recipient['container']['address']] = $recipient['container']['name'];
-        }
-
-        if (count($recipients) === 0) {
-            throw new MissingConfigurationException('No recipients set', 1627843942);
-        }
 
         $defaultFrom = MailUtility::getSystemFrom();
         if (isset($defaultFrom[0])) {
@@ -167,9 +162,10 @@ class BulletinboardFormFactory extends AbstractFormFactory
             ])
             ->buildFrontendUri();
 
-        /** @var EmailFinisher $emailFinisher */
-        $emailFinisher = $formDefinition->createFinisher('EmailToReceiver');
-        $emailFinisher->setOptions([
+        if (!empty($recipients)) {
+          /** @var EmailFinisher $emailFinisher */
+          $emailFinisher = $formDefinition->createFinisher('EmailToReceiver');
+          $emailFinisher->setOptions([
             'subject' => $configuration['verification']['email']['subject'],
             'recipients' => $recipients,
             'senderName' => $defaultFrom[array_key_first($defaultFrom)],
@@ -178,14 +174,14 @@ class BulletinboardFormFactory extends AbstractFormFactory
             'attachUploads' => false,
             'templateName' => 'Notification',
             'templateRootPaths' => [
-                50 => 'EXT:ws_bulletinboard/Resources/Private/Templates/Email/',
+              50 => 'EXT:ws_bulletinboard/Resources/Private/Templates/Email/',
             ],
             'variables' => [
-                'confirmationUrl' => $confirmationUrl,
-                'declineUrl' => $declineUrl,
+              'confirmationUrl' => $confirmationUrl,
+              'declineUrl' => $declineUrl,
             ]
-        ]);
-
+          ]);
+        }
 
         /** @var RedirectFinisher $redirectFinisher */
         $redirectFinisher = $formDefinition->createFinisher('Redirect');
