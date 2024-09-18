@@ -1,1 +1,5 @@
 .git
+.idea
+.ddev
+vendor
+.php_cs.cache
