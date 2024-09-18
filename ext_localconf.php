@@ -56,3 +56,10 @@ foreach ($icons as $identifier => $path) {
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['ws_bulletinboard']= \WapplerSystems\WsBulletinboard\Hooks\PageLayoutView::class;
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] = \WapplerSystems\WsBulletinboard\Hooks\FileReferenceHook::class;
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][TYPO3\CMS\Form\Mvc\Property\TypeConverter\UploadedFileReferenceConverter::class] = [
+  'className' => WapplerSystems\WsBulletinboard\Mvc\Property\TypeConverter\UploadedFileReferenceConverter::class
+];
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][TYPO3\CMS\Form\Mvc\Property\PropertyMappingConfiguration::class] = [
+  'className' => WapplerSystems\WsBulletinboard\Mvc\Property\PropertyMappingConfiguration::class
+];
