@@ -2,28 +2,26 @@
 
 namespace WapplerSystems\WsBulletinboard\Controller;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheGroupException;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
-use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
-use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use WapplerSystems\WsBulletinboard\Domain\Model\Entry;
 use WapplerSystems\WsBulletinboard\Domain\Repository\EntryRepository;
+use WapplerSystems\WsBulletinboard\Event\AdjustBulletinboardEntries;
 
 
 /**
@@ -31,14 +29,10 @@ use WapplerSystems\WsBulletinboard\Domain\Repository\EntryRepository;
  */
 class BulletinboardController extends AbstractController
 {
-
-
     /**
      *
      * @param int $currentPage
      * @return ResponseInterface
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
      */
     public function listAction(int $currentPage = 1): ResponseInterface
     {
@@ -66,19 +60,19 @@ class BulletinboardController extends AbstractController
             ]);
         }
 
-//        $assignedValues = $this->emitActionSignal(self::class, __FUNCTION__, $assignedValues);
+        $event = GeneralUtility::makeInstance(AdjustBulletinboardEntries::class, $assignedValues);
 
-        $this->view->assignMultiple($assignedValues);
+        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch($event);
+
+        $this->view->assignMultiple($event->getAssignedValues());
 
         return $this->htmlResponse();
     }
 
-
     /**
      *
      * @return ResponseInterface
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
      */
     public function latestAction(): ResponseInterface
     {
@@ -91,11 +85,15 @@ class BulletinboardController extends AbstractController
         $assignedValues = [
             'settings' => $this->settings
         ];
+
         $assignedValues['entries'] = $entries->toArray();
 
-//        $assignedValues = $this->emitActionSignal(self::class, __FUNCTION__, $assignedValues);
+        $event = GeneralUtility::makeInstance(AdjustBulletinboardEntries::class, $assignedValues);
 
-        $this->view->assignMultiple($assignedValues);
+        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch($event);
+
+        $this->view->assignMultiple($event->getAssignedValues());
 
         return $this->htmlResponse();
     }
@@ -119,7 +117,6 @@ class BulletinboardController extends AbstractController
         return $this->htmlResponse();
     }
 
-
     public function doneAction(): ResponseInterface
     {
         return $this->htmlResponse();
@@ -127,7 +124,6 @@ class BulletinboardController extends AbstractController
 
     /**
      * @param string $action_key
-     * @throws StopActionException
      * @throws IllegalObjectTypeException
      */
     public function declineAction(string $action_key): ResponseInterface
@@ -152,7 +148,6 @@ class BulletinboardController extends AbstractController
 
     /**
      * @param string $action_key
-     * @throws StopActionException
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      * @throws NoSuchCacheGroupException
@@ -187,14 +182,12 @@ class BulletinboardController extends AbstractController
     /**
      * @param Entry $entry
      * @return ResponseInterface
-     * @throws StopActionException
      * @throws NoSuchCacheGroupException
      * @throws AspectNotFoundException
      * @throws AspectPropertyNotFoundException
      */
     public function deleteEntryAction(Entry $entry): ResponseInterface
     {
-
         $userAspect = GeneralUtility::makeInstance(Context::class)->getAspect('frontend.user');
         if (!$userAspect->isLoggedIn() || $entry->getFeUser()->getUid() !== $userAspect->get('id')) {
 
@@ -221,8 +214,7 @@ class BulletinboardController extends AbstractController
             true
         );
 
-        $this->redirectToUri($this->uriBuilder->setTargetPageUid($this->getTypoScriptFrontendController()->id)->buildFrontendUri());
-
+        return $this->redirectToUri($this->uriBuilder->setTargetPageUid($this->getTypoScriptFrontendController()->id)->buildFrontendUri());
     }
 
 
@@ -233,23 +225,4 @@ class BulletinboardController extends AbstractController
     {
         return $GLOBALS['TSFE'];
     }
-
-
-    /**
-     * Emits signal for various actions
-     *
-     * @param string $class the class name
-     * @param string $signalName name of the signal slot
-     * @param array $signalArguments arguments for the signal slot
-     *
-     * @return array
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    protected function emitActionSignal(string $class, string $signalName, array $signalArguments): array
-    {
-        $signalArguments['extendedVariables'] = [];
-        return $this->signalSlotDispatcher->dispatch($class, $signalName, $signalArguments);
-    }
-
 }
