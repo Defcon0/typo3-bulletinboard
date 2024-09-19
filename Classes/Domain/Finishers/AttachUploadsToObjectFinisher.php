@@ -71,6 +71,11 @@ class AttachUploadsToObjectFinisher extends AbstractFinisher
                 $elementOptions['table'],
                 $uid
             );
+
+            if (!is_array($files)) {
+              $files = [$files];
+            }
+
             if (count(array_filter($files, function ($entry) {
                 return !($entry instanceof FileReference);
               })) === 0) {
