@@ -198,7 +198,7 @@ class BulletinboardController extends AbstractController
                 true
             );
 
-            $this->redirectToUri($this->uriBuilder->setTargetPageUid($this->getTypoScriptFrontendController()->id)->buildFrontendUri());
+            return $this->redirectToUri($this->uriBuilder->setTargetPageUid($this->getTypoScriptFrontendController()->id)->buildFrontendUri());
         }
 
         $entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
