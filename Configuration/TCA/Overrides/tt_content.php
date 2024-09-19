@@ -9,19 +9,22 @@ call_user_func(function () {
     ExtensionUtility::registerPlugin(
         'WsBulletinboard',
         'List',
-        'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:wsbulletinboard_list'
+        'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:wsbulletinboard_list',
+        'EXT:ws_bulletinboard/Resources/Public/Icons/ws_bulletinboard.svg'
     );
 
     ExtensionUtility::registerPlugin(
         'WsBulletinboard',
         'Latest',
-        'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:wsbulletinboard_latest'
+        'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:wsbulletinboard_latest',
+        'EXT:ws_bulletinboard/Resources/Public/Icons/ws_bulletinboard.svg'
     );
 
     ExtensionUtility::registerPlugin(
         'WsBulletinboard',
         'Form',
-        'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:wsbulletinboard_form'
+        'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:wsbulletinboard_form',
+      'EXT:ws_bulletinboard/Resources/Public/Icons/ws_bulletinboard.svg'
     );
 
     /* Flexform setting  */
