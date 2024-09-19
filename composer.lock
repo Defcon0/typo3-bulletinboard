@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4768635243f880360a87c1e2c58a583b",
+    "content-hash": "f409a4b1553821fd803bad4bce352088",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -5492,56 +5492,6 @@
             "time": "2024-08-30T21:24:26+00:00"
         },
         {
-            "name": "wapplersystems/form_extended",
-            "version": "12.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/WapplerSystems/form_extended.git",
-                "reference": "ce3232baceb71e580f3f91e43d367b5efbd2db00"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/WapplerSystems/form_extended/zipball/ce3232baceb71e580f3f91e43d367b5efbd2db00",
-                "reference": "ce3232baceb71e580f3f91e43d367b5efbd2db00",
-                "shasum": ""
-            },
-            "require": {
-                "typo3/cms-form": "^12.4"
-            },
-            "type": "typo3-cms-extension",
-            "extra": {
-                "typo3/cms": {
-                    "extension-key": "form_extended"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "WapplerSystems\\FormExtended\\": "Classes"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Sven Wappler",
-                    "homepage": "https://wappler.systems",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Multi upload field, double opt in method and other",
-            "homepage": "https://wappler.systems",
-            "keywords": [
-                "typo3"
-            ],
-            "support": {
-                "issues": "https://github.com/WapplerSystems/form_extended/issues",
-                "source": "https://github.com/WapplerSystems/form_extended/tree/12.2.0"
-            },
-            "time": "2024-08-29T18:00:37+00:00"
-        },
-        {
             "name": "webmozart/assert",
             "version": "1.11.0",
             "source": {
@@ -5981,16 +5931,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.3",
+            "version": "1.12.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "0fcbf194ab63d8159bb70d9aa3e1350051632009"
+                "reference": "ffa517cb918591b93acc9b95c0bebdcd0e4538bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0fcbf194ab63d8159bb70d9aa3e1350051632009",
-                "reference": "0fcbf194ab63d8159bb70d9aa3e1350051632009",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ffa517cb918591b93acc9b95c0bebdcd0e4538bd",
+                "reference": "ffa517cb918591b93acc9b95c0bebdcd0e4538bd",
                 "shasum": ""
             },
             "require": {
@@ -6035,7 +5985,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-09T08:10:35+00:00"
+            "time": "2024-09-19T07:58:01+00:00"
         },
         {
             "name": "rector/rector",
