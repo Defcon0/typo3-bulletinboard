@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use WapplerSystems\WsBulletinboard\Domain\Model\Entry;
 use WapplerSystems\WsBulletinboard\Domain\Repository\EntryRepository;
-use WapplerSystems\WsBulletinboard\Event\AdjustBulletinboardEntries;
+use WapplerSystems\WsBulletinboard\Event\AdjustBulletinboardControllerValues;
 
 
 /**
@@ -60,7 +60,7 @@ class BulletinboardController extends AbstractController
             ]);
         }
 
-        $event = GeneralUtility::makeInstance(AdjustBulletinboardEntries::class, $assignedValues);
+        $event = GeneralUtility::makeInstance(AdjustBulletinboardControllerValues::class, $assignedValues);
 
         $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
         $eventDispatcher->dispatch($event);
@@ -88,7 +88,7 @@ class BulletinboardController extends AbstractController
 
         $assignedValues['entries'] = $entries->toArray();
 
-        $event = GeneralUtility::makeInstance(AdjustBulletinboardEntries::class, $assignedValues);
+        $event = GeneralUtility::makeInstance(AdjustBulletinboardControllerValues::class, $assignedValues);
 
         $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
         $eventDispatcher->dispatch($event);

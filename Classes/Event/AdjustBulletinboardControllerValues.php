@@ -2,7 +2,7 @@
 
 namespace WapplerSystems\WsBulletinboard\Event;
 
-class AdjustBulletinboardEntries
+class AdjustBulletinboardControllerValues
 {
   public function __construct(protected array $assignedValues)
   {
