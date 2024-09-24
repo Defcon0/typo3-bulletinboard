@@ -94,6 +94,12 @@
 			<trans-unit id="flexform.oldFirst">
 				<source>Oldest first</source>
 			</trans-unit>
+			<trans-unit id="flexform.newUpdatePid">
+				<source>New/Update page</source>
+			</trans-unit>
+			<trans-unit id="flexform.newUpdatePid.description">
+				<source>The page needs to contain the form plugin of this extension</source>
+			</trans-unit>
 			<trans-unit id="flexform.automaticApproval">
 				<source>Automatic approval</source>
 			</trans-unit>

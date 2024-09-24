@@ -59,6 +59,12 @@
 			<trans-unit id="flexform.oldFirst">
 				<target>Die ältesten zu erst</target>
 			</trans-unit>
+			<trans-unit id="flexform.newUpdatePid">
+				<target>Neu/Bearbeiten-Seite</target>
+			</trans-unit>
+			<trans-unit id="flexform.newUpdatePid.description">
+				<target>Die Seite muss das Form-Plugin dieser Extension enthalten</target>
+			</trans-unit>
 			<trans-unit id="flexform.verification.email.senderName">
 				<target>Absendername der Bestätigungs-E-Mail</target>
 			</trans-unit>
