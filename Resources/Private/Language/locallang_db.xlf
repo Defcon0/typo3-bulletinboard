@@ -43,10 +43,10 @@
 
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.title">
-				<source>WapplerSystems Bulletinboard - Form</source>
+				<source>WapplerSystems bulletin board - New/Update Entry Form</source>
 			</trans-unit>
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.description">
-				<source>This allows the visitor to write a new entry.</source>
+				<source>This allows the visitor to write a new entry or update existing ones.</source>
 			</trans-unit>
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardList.title">

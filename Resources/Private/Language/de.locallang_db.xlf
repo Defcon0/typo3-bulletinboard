@@ -121,12 +121,12 @@
 
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.title">
-				<source>WapplerSystems bulletin board - Form</source>
-				<target>WapplerSystems schwarzes Brett - Formular</target>
+				<source>WapplerSystems bulletin board - New/Update Entry Form</source>
+				<target>WapplerSystems schwarzes Brett - Formular zum Erstellen und Bearbeiten von Einträgen</target>
 			</trans-unit>
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.description">
-				<source>This allows the visitor to write a new entry.</source>
-				<target>Dies ermöglicht dem Besucher, einen neuen Eintrag zu schreiben.</target>
+				<source>This allows the visitor to write a new entry or update existing ones.</source>
+				<target>Dies ermöglicht dem Besucher, einen neuen Eintrag zu schreiben bzw. bestehende zu bearbeiten.</target>
 			</trans-unit>
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardList.title">
