@@ -30,8 +30,6 @@ use WapplerSystems\WsBulletinboard\Mvc\Validation\FileCountValidator;
 
 class BulletinboardFormFactory extends AbstractFormFactory
 {
-
-
     /**
      * @param array $configuration
      * @param string|null $prototypeName
@@ -52,7 +50,6 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $formDefinition->setRendererClassName(FluidFormRenderer::class);
         $formDefinition->setRenderingOption('controllerAction', 'new');
         $formDefinition->setRenderingOption('submitButtonLabel', 'Submit');
-
 
         if (empty($configuration['frameworkConfiguration']['persistence']['storagePid'])) {
             throw new MissingConfigurationException('No storagePid set', 1627843908);
@@ -205,6 +202,17 @@ class BulletinboardFormFactory extends AbstractFormFactory
             ]
         ]]);
 
+        $this->addTitleElement($fieldset);
+        $this->addImagesElement($fieldset, $configuration);
+        $this->addMessageField($fieldset);
+
+        $this->triggerFormBuildingFinished($formDefinition);
+
+        return $formDefinition;
+    }
+
+    protected function addTitleElement(Section $fieldset): void
+    {
         /** @var GenericFormElement $element */
         $element = $fieldset->createElement('title', 'Text');
         $element->setLabel('Title');
@@ -215,7 +223,10 @@ class BulletinboardFormFactory extends AbstractFormFactory
 
         $element->addValidator($stringLengthValidator);
         $element->addValidator(new NotEmptyValidator());
+    }
 
+    protected function addImagesElement(Section $fieldset, array $configuration): void
+    {
         $element = $fieldset->createElement('images', 'FileUpload');
         $element->setLabel('Images');
         $element->setProperty('multiple', true);
@@ -246,7 +257,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
 
         if ($maxSizePerFile > 0) {
             $fileSizeValidator = new FileSizeValidator();
-          $fileSizeValidator->setOptions(['minimum' => '0K', 'maximum' => $maxUploadFileSize . 'K']);
+            $fileSizeValidator->setOptions(['minimum' => '0K', 'maximum' => $maxUploadFileSize . 'K']);
             $element->addValidator($fileSizeValidator);
             $fluidAdditionalAttributes['data-min-filesize-per-file'] = 0;
             $fluidAdditionalAttributes['data-max-filesize-per-file'] = $maxSizePerFile * 1024;
@@ -263,7 +274,10 @@ class BulletinboardFormFactory extends AbstractFormFactory
             $fluidAdditionalAttributes['data-msg-files-limit'] = LocalizationUtility::translate('msg.filesLimit', 'WsBulletinboard', [0, $maxFiles]);
         }
         $element->setProperty('fluidAdditionalAttributes', $fluidAdditionalAttributes);
+    }
 
+    protected function addMessageField(Section $fieldset): void
+    {
         /** @var GenericFormElement $element */
         $element = $fieldset->createElement('message', 'Textarea');
         $element->setLabel('Message');
@@ -276,11 +290,6 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $stringLengthValidator->setOptions(['minimum' => (int)($configuration['fields']['message']['minCharacters'] ?? 50), 'maximum' => (int)($configuration['fields']['message']['maxCharacters'] ?? PHP_INT_MAX)]);
 
         $element->addValidator($stringLengthValidator);
-
-
-        $this->triggerFormBuildingFinished($formDefinition);
-
-        return $formDefinition;
     }
 
     /**
