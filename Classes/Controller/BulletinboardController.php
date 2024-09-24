@@ -40,7 +40,7 @@ class BulletinboardController extends AbstractController
         $this->getTypoScriptFrontendController()->addCacheTags(['ws_bulletinboard']);
 
         $entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
-        $entries = $entryRepository->findSorted($this->settings);
+        $entries         = $entryRepository->findSorted($this->settings);
 
         $assignedValues = [
             'settings' => $this->settings
@@ -52,11 +52,11 @@ class BulletinboardController extends AbstractController
 
             $paginator = new QueryResultPaginator($entries, $currentPage, (int)($this->settings['paginate']['itemsPerPage'] ?? 10));
 
-            $pagination = new SimplePagination($paginator);
+            $pagination     = new SimplePagination($paginator);
             $assignedValues = array_merge($assignedValues, [
-                'paginator' => $paginator,
+                'paginator'  => $paginator,
                 'pagination' => $pagination,
-                'entries' => $paginator->getPaginatedItems(),
+                'entries'    => $paginator->getPaginatedItems(),
             ]);
         }
 
@@ -80,7 +80,7 @@ class BulletinboardController extends AbstractController
         $this->getTypoScriptFrontendController()->addCacheTags(['ws_bulletinboard']);
 
         $entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
-        $entries = $entryRepository->findSorted($this->settings);
+        $entries         = $entryRepository->findSorted($this->settings);
 
         $assignedValues = [
             'settings' => $this->settings
@@ -105,10 +105,9 @@ class BulletinboardController extends AbstractController
      */
     public function newAction(): ResponseInterface
     {
-
-        $configurationManager = GeneralUtility::makeInstance(FrontendConfigurationManager::class);
+        $configurationManager                     = GeneralUtility::makeInstance(FrontendConfigurationManager::class);
         $this->settings['frameworkConfiguration'] = $configurationManager->getConfiguration();
-        $this->settings['pageUid'] = $this->getTypoScriptFrontendController()->id;
+        $this->settings['pageUid']                = $this->getTypoScriptFrontendController()->id;
 
         $this->view->assignMultiple([
             'settings' => $this->settings,
@@ -129,7 +128,7 @@ class BulletinboardController extends AbstractController
     public function declineAction(string $action_key): ResponseInterface
     {
         $entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
-        $entry = $entryRepository->findOneByActionKey($action_key);
+        $entry           = $entryRepository->findOneByActionKey($action_key);
 
         if ($entry === null) {
             return new ForwardResponse('entryNotFound');
@@ -155,7 +154,7 @@ class BulletinboardController extends AbstractController
     public function confirmAction(string $action_key): ResponseInterface
     {
         $entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
-        $entry = $entryRepository->findOneByActionKey($action_key);
+        $entry           = $entryRepository->findOneByActionKey($action_key);
 
         if ($entry === null) {
             return new ForwardResponse('entryNotFound');
@@ -174,7 +173,6 @@ class BulletinboardController extends AbstractController
 
     public function entryNotFoundAction(): ResponseInterface
     {
-
         return $this->htmlResponse();
     }
 
@@ -186,18 +184,9 @@ class BulletinboardController extends AbstractController
      * @throws AspectNotFoundException
      * @throws AspectPropertyNotFoundException
      */
-    public function deleteEntryAction(Entry $entry): ResponseInterface
+    public function deleteAction(Entry $entry): ResponseInterface
     {
-        $userAspect = GeneralUtility::makeInstance(Context::class)->getAspect('frontend.user');
-        if (!$userAspect->isLoggedIn() || $entry->getFeUser()->getUid() !== $userAspect->get('id')) {
-
-            $this->addFlashMessage(
-                LocalizationUtility::translate('msg.notOwner', 'WsBulletinboard'),
-                LocalizationUtility::translate('title.error', 'WsBulletinboard'),
-                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR,
-                true
-            );
-
+        if (!$this->checkWriteAccess($entry)) {
             return $this->redirectToUri($this->uriBuilder->setTargetPageUid($this->getTypoScriptFrontendController()->id)->buildFrontendUri());
         }
 
@@ -224,5 +213,41 @@ class BulletinboardController extends AbstractController
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
+    }
+
+    public function updateAction(Entry $entry): ResponseInterface
+    {
+        if (!$this->checkWriteAccess($entry)) {
+            return $this->redirectToUri($this->uriBuilder->setTargetPageUid($this->getTypoScriptFrontendController()->id)->buildFrontendUri());
+        }
+
+        $configurationManager                     = GeneralUtility::makeInstance(FrontendConfigurationManager::class);
+        $this->settings['frameworkConfiguration'] = $configurationManager->getConfiguration();
+        $this->settings['pageUid']                = $this->getTypoScriptFrontendController()->id;
+
+        $this->view->assignMultiple([
+            'settings' => $this->settings,
+        ]);
+
+        return $this->htmlResponse();
+    }
+
+    protected function checkWriteAccess(Entry $entry): bool
+    {
+        $userAspect = GeneralUtility::makeInstance(Context::class)->getAspect('frontend.user');
+
+        if (!$userAspect->isLoggedIn() || $entry->getFeUser()->getUid() !== $userAspect->get('id')) {
+
+            $this->addFlashMessage(
+                LocalizationUtility::translate('msg.notOwner', 'WsBulletinboard'),
+                LocalizationUtility::translate('title.error', 'WsBulletinboard'),
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR,
+                true
+            );
+
+            return false;
+        }
+
+        return true;
     }
 }
