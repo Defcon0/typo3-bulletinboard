@@ -94,11 +94,8 @@ class AttachUploadsToObjectFinisher extends AbstractFinisher
 
                 $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
 
-
-
                 /** @var FileReference $file */
                 foreach ($files as $file) {
-
                     $newId = 'NEW1234';
                     $data = [];
                     $data['sys_file_reference'][$newId] = [
