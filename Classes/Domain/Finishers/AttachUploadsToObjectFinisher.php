@@ -9,6 +9,8 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
+use TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
@@ -74,6 +76,38 @@ class AttachUploadsToObjectFinisher extends AbstractFinisher
 
             if (!is_array($files)) {
               $files = [$files];
+            }
+
+            // cleanup beforehands for update mode
+            $resourceFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
+
+            $existingFileReferences = $databaseConnection->executeQuery(
+                'SELECT * FROM sys_file_reference WHERE uid_foreign = ' . $uid . ' AND tablenames = "' .
+                $elementOptions['table'] . '" AND fieldname = "' . $mapOnDatabaseColumn . '"'
+            )->fetchAllAssociative();
+
+            $existingFiles = array_map(function ($entry) use ($resourceFactory) {
+                try {
+                    return $resourceFactory->getFileObject($entry['uid_local']);
+                } catch (\Exception $e) {
+                    return null;
+                }
+
+            }, $existingFileReferences);
+
+            foreach ($existingFiles as $file) {
+                if (!($file instanceof File)) {
+                    continue;
+                }
+                $folder = $file->getParentFolder();
+                $file->delete();
+
+                try {
+                    if ($folder->getFileCount([], true) === 0) {
+                        $folder->delete();
+                    }
+                } catch (InsufficientFolderAccessPermissionsException $e) {
+                }
             }
 
             if (count(array_filter($files, function ($entry) {
