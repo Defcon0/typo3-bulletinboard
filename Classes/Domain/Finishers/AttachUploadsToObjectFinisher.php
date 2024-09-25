@@ -78,37 +78,11 @@ class AttachUploadsToObjectFinisher extends AbstractFinisher
               $files = [$files];
             }
 
-            // cleanup beforehands for update mode
-            $resourceFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-
-            $existingFileReferences = $databaseConnection->executeQuery(
-                'SELECT * FROM sys_file_reference WHERE uid_foreign = ' . $uid . ' AND tablenames = "' .
+            // cleanup file references beforehands for update mode
+            $databaseConnection->executeQuery(
+                'DELETE FROM sys_file_reference WHERE uid_foreign = ' . $uid . ' AND tablenames = "' .
                 $elementOptions['table'] . '" AND fieldname = "' . $mapOnDatabaseColumn . '"'
-            )->fetchAllAssociative();
-
-            $existingFiles = array_map(function ($entry) use ($resourceFactory) {
-                try {
-                    return $resourceFactory->getFileObject($entry['uid_local']);
-                } catch (\Exception $e) {
-                    return null;
-                }
-
-            }, $existingFileReferences);
-
-            foreach ($existingFiles as $file) {
-                if (!($file instanceof File)) {
-                    continue;
-                }
-                $folder = $file->getParentFolder();
-                $file->delete();
-
-                try {
-                    if ($folder->getFileCount([], true) === 0) {
-                        $folder->delete();
-                    }
-                } catch (InsufficientFolderAccessPermissionsException $e) {
-                }
-            }
+            );
 
             if (count(array_filter($files, function ($entry) {
                 return !($entry instanceof FileReference);

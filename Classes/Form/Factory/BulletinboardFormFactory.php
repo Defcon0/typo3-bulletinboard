@@ -264,10 +264,9 @@ class BulletinboardFormFactory extends AbstractFormFactory
     {
         $element = $fieldset->createElement('images', 'FileUpload');
         $element->setLabel('Images');
-        $element->setProperty('multiple', true);
         $element->setProperty('allowedMimeTypes', ['image/jpg', 'image/jpeg']);
         $element->setProperty('saveToFileMount', $configuration['storageFolder']);
-        $element->setDefaultValue($entry?->getImages()->toArray()[0]);
+        $element->setDefaultValue($entry?->getImages()->toArray());
 
         $maxUploadFileSizeString = trim($configuration['fields']['images']['maxUploadFileSize'] ?? '');
         $maxUploadFileSize = 0;
@@ -284,8 +283,11 @@ class BulletinboardFormFactory extends AbstractFormFactory
         ];
 
         $maxFiles = (int)($configuration['fields']['images']['maxFiles'] ?? 0);
+        $element->setProperty('multiple', $maxFiles !== 1);
+
         $maxSizePerFile = 0;
         $maxSizePerFileString = ($configuration['fields']['images']['maxSizePerFile'] ?? '');
+
         if ($maxSizePerFileString !== '') {
             $maxSizePerFile = $this->humanReadableToBytes($maxSizePerFileString) / 1024;
         }
