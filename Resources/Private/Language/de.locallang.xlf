@@ -187,7 +187,7 @@
 				<target><![CDATA[Ich habe die <a href="%s">Datenschutzbestimmungen</a> gelesen und akzeptiere sie.]]></target>
 			</trans-unit>
 			<trans-unit id="element.Form.renderingOptions.submitButtonLabel">
-				<target>Eintragen</target>
+				<target>Speichern</target>
 			</trans-unit>
 
 
