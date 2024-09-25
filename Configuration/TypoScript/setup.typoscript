@@ -34,12 +34,8 @@ plugin.tx_wsbulletinboard {
 }
 
 page {
-  includeCSS {
-    wsbulletinboard = EXT:ws_bulletinboard/Resources/Public/CSS/styles.css
-  }
-
   includeJSFooter {
-    wsbulletinboard = EXT:ws_bulletinboard/Resources/Public/JavaScript/jquery.bsTextCounter.js
+    wsbulletinboard = EXT:ws_bulletinboard/Resources/Public/JavaScript/bulletinboard.js
   }
 
 }
