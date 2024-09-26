@@ -68,7 +68,7 @@ final class MultiUploadedResourceViewHelper extends AbstractFormFieldViewHelper
                 foreach ($resources as $i => $resource) {
                     $resourcePointerIdAttribute = '';
                     if ($this->hasArgument('id')) {
-                        $resourcePointerIdAttribute = ' id="' . htmlspecialchars($this->arguments['id']) . '-file-reference-' . $i . '"';
+                        $resourcePointerIdAttribute = ' id="' . htmlspecialchars($this->arguments['id']) . '-file-reference-' . ($i+1) . '"';
                     }
                     $resourcePointerValue = $resource->getUid();
                     if ($resourcePointerValue === null) {
@@ -77,7 +77,8 @@ final class MultiUploadedResourceViewHelper extends AbstractFormFieldViewHelper
                         $resourcePointerValue = 'file:' . $resource->getOriginalResource()->getOriginalFile()->getUid();
                     }
                     $result[] = $resource;
-                    $output .= '<input type="hidden" name="' . htmlspecialchars($this->getName()) . '[submittedFile][resourcePointer][]" value="' . htmlspecialchars($this->hashService->appendHmac((string)$resourcePointerValue)) . '"' . $resourcePointerIdAttribute . ' />';
+                    $output .= '<input type="hidden" name="' . htmlspecialchars($this->getName()) . '[submittedFile][resourcePointer][]" value="' .
+                        htmlspecialchars($this->hashService->appendHmac((string)$resourcePointerValue)) . '" data-index="' . ($i+1) . '" ' . $resourcePointerIdAttribute . ' />';
                 }
 
                 $this->templateVariableContainer->add($as, $result);

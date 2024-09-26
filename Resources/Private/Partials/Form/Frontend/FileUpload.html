@@ -14,7 +14,9 @@
             <f:if condition="{isMultiResource}">
                 <f:then>
                     <f:for each="{resource}" as="singleResource" key="key">
-                        <div id="{element.uniqueIdentifier}-preview-{key}">
+                        <div class="bulletinboard-preview" id="{element.uniqueIdentifier}-preview-{key+1}" data-index="{key+1}">
+                            <a href="#" class="delete">X</a>
+                            <f:image maxWidth="100" src="{singleResource.originalResource.originalFile.uid}" alt="{singleResource.originalResource.originalFile.name}"></f:image>
                             {singleResource.originalResource.originalFile.name}
                         </div>
                     </f:for>

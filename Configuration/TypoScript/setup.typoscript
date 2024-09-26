@@ -35,7 +35,7 @@ plugin.tx_wsbulletinboard {
 
 page {
   includeJSFooter {
-    wsbulletinboard = EXT:ws_bulletinboard/Resources/Public/JavaScript/bulletinboard.js
+    wsbulletinboard = EXT:ws_bulletinboard/Resources/Public/JavaScript/Bulletinboard.js
   }
 
 }
