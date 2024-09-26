@@ -59,10 +59,10 @@
 			<trans-unit id="flexform.oldFirst">
 				<target>Die ältesten zu erst</target>
 			</trans-unit>
-			<trans-unit id="flexform.newUpdatePid">
+			<trans-unit id="flexform.newEditPid">
 				<target>Neu/Bearbeiten-Seite</target>
 			</trans-unit>
-			<trans-unit id="flexform.newUpdatePid.description">
+			<trans-unit id="flexform.newEditPid.description">
 				<target>Die Seite muss das Form-Plugin dieser Extension enthalten</target>
 			</trans-unit>
 			<trans-unit id="flexform.verification.email.senderName">
@@ -127,11 +127,11 @@
 
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.title">
-				<source>WapplerSystems bulletin board - New/Update Entry Form</source>
+				<source>WapplerSystems bulletin board - New/Edit Entry Form</source>
 				<target>WapplerSystems schwarzes Brett - Formular zum Erstellen und Bearbeiten von Einträgen</target>
 			</trans-unit>
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.description">
-				<source>This allows the visitor to write a new entry or update existing ones.</source>
+				<source>This allows the visitor to write a new entry or editing existing ones.</source>
 				<target>Dies ermöglicht dem Besucher, einen neuen Eintrag zu schreiben bzw. bestehende zu bearbeiten.</target>
 			</trans-unit>
 

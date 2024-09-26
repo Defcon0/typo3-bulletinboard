@@ -240,8 +240,8 @@
 				<source>Decline</source>
 				<target>Ablehnen</target>
 			</trans-unit>
-			<trans-unit id="btn.update">
-				<source>Update</source>
+			<trans-unit id="btn.edit">
+				<source>Edit</source>
 				<target>Bearbeiten</target>
 			</trans-unit>
 			<trans-unit id="btn.delete">

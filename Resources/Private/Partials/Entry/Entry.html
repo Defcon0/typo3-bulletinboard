@@ -37,8 +37,8 @@
 
             <f:security.ifAuthenticated>
                 <wb:userOwnsEntry entry="{entry}">
-                    <f:link.action action="update" arguments="{entry:entry}" pageUid="{settings.newUpdatePid}">
-                        {f:translate(key:'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang.xlf:btn.delete')}
+                    <f:link.action action="edit" arguments="{entry:entry}" pageUid="{settings.newUpdatePid}">
+                        {f:translate(key:'LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang.xlf:btn.edit')}
                     </f:link.action>
 
                     <f:link.action action="delete" arguments="{entry:entry}">

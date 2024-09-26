@@ -78,7 +78,7 @@ class AttachUploadsToObjectFinisher extends AbstractFinisher
               $files = [$files];
             }
 
-            // cleanup file references beforehands for update mode
+            // cleanup file references beforehands for edit mode
             $databaseConnection->executeQuery(
                 'DELETE FROM sys_file_reference WHERE uid_foreign = ' . $uid . ' AND tablenames = "' .
                 $elementOptions['table'] . '" AND fieldname = "' . $mapOnDatabaseColumn . '"'

@@ -215,7 +215,7 @@ class BulletinboardController extends AbstractController
         return $GLOBALS['TSFE'];
     }
 
-    public function updateAction(Entry $entry): ResponseInterface
+    public function editAction(Entry $entry): ResponseInterface
     {
         if (!$this->checkWriteAccess($entry)) {
             return $this->redirectToUri($this->uriBuilder->setTargetPageUid($this->getTypoScriptFrontendController()->id)->buildFrontendUri());

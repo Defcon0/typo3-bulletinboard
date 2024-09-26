@@ -49,7 +49,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $currentEntry = null;
         $currentParams = $GLOBALS['TYPO3_REQUEST']->getQueryParams();
 
-        if (($currentParams['tx_wsbulletinboard_list']['action'] ?? '') === 'update') {
+        if (($currentParams['tx_wsbulletinboard_list']['action'] ?? '') === 'edit') {
             $currentEntryId = $currentParams['entry'] ?? $currentParams['tx_wsbulletinboard_list']['entry'] ?? 0;
 
             if ($currentEntryId) {
@@ -63,7 +63,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
 
         $formDefinition = GeneralUtility::makeInstance(FormDefinition::class, 'bulletinboardEntryForm', $prototypeConfiguration);
         $formDefinition->setRendererClassName(FluidFormRenderer::class);
-        $formDefinition->setRenderingOption('controllerAction', $currentEntry === null ? 'new' : 'update');
+        $formDefinition->setRenderingOption('controllerAction', $currentEntry === null ? 'new' : 'edit');
         $formDefinition->setRenderingOption('additionalParams', ['entry' => $currentEntry?->getUid()]);
         $formDefinition->setRenderingOption('submitButtonLabel', 'Submit');
 

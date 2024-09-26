@@ -141,8 +141,8 @@
 			<trans-unit id="btn.delete">
 				<source>Delete</source>
 			</trans-unit>
-			<trans-unit id="btn.update">
-				<source>Update</source>
+			<trans-unit id="btn.edit">
+				<source>Edit</source>
 			</trans-unit>
 
 			<trans-unit id="msg.filesizeExceeded">

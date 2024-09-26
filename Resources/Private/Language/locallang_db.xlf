@@ -43,10 +43,10 @@
 
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.title">
-				<source>WapplerSystems bulletin board - New/Update Entry Form</source>
+				<source>WapplerSystems bulletin board - New/Edit Entry Form</source>
 			</trans-unit>
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.description">
-				<source>This allows the visitor to write a new entry or update existing ones.</source>
+				<source>This allows the visitor to write a new entry or editing existing ones.</source>
 			</trans-unit>
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardList.title">
@@ -94,10 +94,10 @@
 			<trans-unit id="flexform.oldFirst">
 				<source>Oldest first</source>
 			</trans-unit>
-			<trans-unit id="flexform.newUpdatePid">
-				<source>New/Update page</source>
+			<trans-unit id="flexform.newEditPid">
+				<source>New/Edit page</source>
 			</trans-unit>
-			<trans-unit id="flexform.newUpdatePid.description">
+			<trans-unit id="flexform.newEditPid.description">
 				<source>The page needs to contain the form plugin of this extension</source>
 			</trans-unit>
 			<trans-unit id="flexform.automaticApproval">

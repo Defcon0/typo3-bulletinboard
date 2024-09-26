@@ -41,10 +41,10 @@
                             </config>
                         </TCEforms>
                     </settings.sorting>
-                    <settings.newUpdatePid>
+                    <settings.newEditPid>
                         <TCEforms>
-                            <label>LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:flexform.newUpdatePid</label>
-                            <description>LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:flexform.newUpdatePid.description</description>
+                            <label>LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:flexform.newEditPid</label>
+                            <description>LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:flexform.newEditPid.description</description>
                             <config>
                                 <type>group</type>
                                 <allowed>pages</allowed>
@@ -53,7 +53,7 @@
                                 <minitems>0</minitems>
                             </config>
                         </TCEforms>
-                    </settings.newUpdatePid>
+                    </settings.newEditPid>
                     <persistence.storagePid>
                         <TCEforms>
                             <label>LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:flexform.storagePid</label>
