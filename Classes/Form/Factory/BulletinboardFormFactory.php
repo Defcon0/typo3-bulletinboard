@@ -26,9 +26,11 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use WapplerSystems\WsBulletinboard\Domain\Finishers\AttachUploadsToObjectFinisher;
 use WapplerSystems\WsBulletinboard\Domain\Model\Entry;
 use WapplerSystems\WsBulletinboard\Domain\Repository\EntryRepository;
+use WapplerSystems\WsBulletinboard\Event\AdjustBulletinboardFormFieldsEvent;
 use WapplerSystems\WsBulletinboard\Exception\MissingConfigurationException;
 use WapplerSystems\WsBulletinboard\Mvc\Validation\FileCollectionSizeValidator;
 use WapplerSystems\WsBulletinboard\Mvc\Validation\FileCountValidator;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class BulletinboardFormFactory extends AbstractFormFactory
 {
@@ -239,6 +241,11 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $this->addTitleElement($fieldset, $currentEntry);
         $this->addImagesElement($fieldset, $configuration, $currentEntry);
         $this->addMessageField($fieldset, $configuration, $currentEntry);
+
+        $event = GeneralUtility::makeInstance(AdjustBulletinboardFormFieldsEvent::class, $fieldset, $configuration, $currentEntry);
+
+        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch($event);
 
         $this->triggerFormBuildingFinished($formDefinition);
 
