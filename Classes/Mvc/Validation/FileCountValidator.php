@@ -50,8 +50,8 @@ class FileCountValidator extends AbstractValidator
         if (!is_array($value) && !($value instanceof \Countable)) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'validation.error.1697065882',
-                    'form_extended'
+                    'msg.valueNotAnArray',
+                    'msg.filecountExceeded'
                 ),
                 1697065882
             );
@@ -63,8 +63,8 @@ class FileCountValidator extends AbstractValidator
         if (count($value) < $minimum || count($value) > $maximum) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'validation.error.1697065997',
-                    'form_extended',
+                    'msg.filecountExceeded',
+                    'ws_bulletinboard',
                     [$minimum, $maximum]
                 ),
                 1697065997,

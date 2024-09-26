@@ -264,7 +264,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
     {
         $element = $fieldset->createElement('images', 'FileUpload');
         $element->setLabel('Images');
-        $element->setProperty('allowedMimeTypes', ['image/jpg', 'image/jpeg']);
+        $element->setProperty('allowedMimeTypes', ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']);
         $element->setProperty('saveToFileMount', $configuration['storageFolder']);
         $element->setDefaultValue($entry?->getImages()->toArray());
 
@@ -305,7 +305,9 @@ class BulletinboardFormFactory extends AbstractFormFactory
 
         $element->addValidator($fileCollectionSizeValidator);
         if ($maxFiles > 0) {
-            $element->addValidator(new FileCountValidator(['minimum' => 0, 'maximum' => 4]));
+            $fileCountValidator = new FileCountValidator();
+            $fileCountValidator->setOptions(['minimum' => 0, 'maximum' => $maxFiles]);
+            $element->addValidator($fileCountValidator);
             $fluidAdditionalAttributes['data-min-files'] = 0;
             $fluidAdditionalAttributes['data-max-files'] = $maxFiles;
             $fluidAdditionalAttributes['data-msg-files-limit'] = LocalizationUtility::translate('msg.filesLimit', 'WsBulletinboard', [0, $maxFiles]);

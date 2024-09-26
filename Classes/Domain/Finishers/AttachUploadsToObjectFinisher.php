@@ -113,6 +113,7 @@ class AttachUploadsToObjectFinisher extends AbstractFinisher
                         'uid_foreign' => $contentElement['uid'],
                         'fieldname' => $mapOnDatabaseColumn,
                         'pid' => $contentElement['pid'],
+                        'sys_language_uid' => 0
                     ];
                     $data[$elementOptions['table']][$contentElement['uid']] = [
                         $mapOnDatabaseColumn => $newId

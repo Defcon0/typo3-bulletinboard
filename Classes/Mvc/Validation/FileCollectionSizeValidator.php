@@ -20,6 +20,7 @@ namespace WapplerSystems\WsBulletinboard\Mvc\Validation;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Validation\Error;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Form\Mvc\Property\TypeConverter\PseudoFile;
 use TYPO3\CMS\Form\Mvc\Property\TypeConverter\PseudoFileReference;
@@ -58,6 +59,12 @@ class FileCollectionSizeValidator extends AbstractValidator
                 $fileSize = $resource->getSize();
             } elseif ($resource instanceof PseudoFile) {
                 $fileSize = $resource->getSize();
+            } elseif ($resource instanceof Error) {
+                $this->addError(
+                    $resource->getMessage(),
+                    1234567890
+                );
+                return;
             } else {
                 $this->addError(
                     $this->translateErrorMessage(
@@ -89,11 +96,11 @@ class FileCollectionSizeValidator extends AbstractValidator
         if ($totalSize > $maxFileSize) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'validation.error.1505305753',
-                    'form',
+                    'validation.error.1627065297',
+                    'ws_bulletinboard',
                     [GeneralUtility::formatSize($maxFileSize, $labels)]
                 ),
-                1505305753,
+                1627065297,
                 [GeneralUtility::formatSize($maxFileSize, $labels)]
             );
         }

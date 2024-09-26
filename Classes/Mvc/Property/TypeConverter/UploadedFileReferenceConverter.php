@@ -64,7 +64,6 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Form\Mvc\Property\TypeCo
                         }
                     }
                 }
-
             }
 
             return $resources;

@@ -253,6 +253,18 @@
 				<source>The file size exceeds the maximum allowed size of %s.</source>
 				<target>Die maximal erlaubte Dateigröße von %s wurde überschritten.</target>
 			</trans-unit>
+
+			<trans-unit id="validation.error.1697065882">
+				<source>Value is not an array</source>
+				<target>Der Feldwert ist kein Array</target>
+			</trans-unit>
+			<trans-unit id="validation.error.1697065997">
+				<source>The number of files must be between %s and %s</source>
+				<target>Sie dürfen zwischen %s und %s Dateien hochladen</target>
+			</trans-unit>
+			<trans-unit id="validation.error.1627065297">
+				<source>Die Gesamtgröße der hochgeladenen Dateien von %s wurde überschritten.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

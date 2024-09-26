@@ -149,6 +149,15 @@
 				<source>The file size exceeds the maximum allowed size of %s.</source>
 			</trans-unit>
 
+			<trans-unit id="validation.error.1697065882">
+				<source>Value is not an array</source>
+			</trans-unit>
+			<trans-unit id="validation.error.1697065997">
+				<source>The number of files must be between %s and %s</source>
+			</trans-unit>
+			<trans-unit id="validation.error.1627065297">
+				<source>The combined size of your files exceeds the maximum allowed size of %s.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
