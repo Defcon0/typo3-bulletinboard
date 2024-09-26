@@ -28,7 +28,6 @@ class RemoveEntryCommand extends Command
     {
         $uid = (int)$input->getArgument('uid');
 
-
         $entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
 
         $entry = $entryRepository->findByUid($uid);
