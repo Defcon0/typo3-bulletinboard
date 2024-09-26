@@ -80,7 +80,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $context = GeneralUtility::makeInstance(Context::class);
 
         $recipients = [];
-        $recipientsFlexform = $configuration['verification']['recipients'] ?: [];
+        $recipientsFlexform = $configuration['verification']['recipients'] ?? [];
 
         foreach ($recipientsFlexform as $recipient) {
           $recipients[$recipient['container']['address']] = $recipient['container']['name'];
