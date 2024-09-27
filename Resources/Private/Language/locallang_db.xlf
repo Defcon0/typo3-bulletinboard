@@ -41,23 +41,22 @@
 				<source>Bulletin board: Latest</source>
 			</trans-unit>
 
-
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.title">
-				<source>WapplerSystems bulletin board - New/Edit Entry Form</source>
+				<source>WapplerSystems Bulletin board - New/Edit Entry Form</source>
 			</trans-unit>
 			<trans-unit id="tsconfig.wizard.WsBulletinboardForm.description">
 				<source>This allows the visitor to write a new entry or editing existing ones.</source>
 			</trans-unit>
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardList.title">
-				<source>WapplerSystems Bulletinboard - List</source>
+				<source>WapplerSystems Bulletin board - List</source>
 			</trans-unit>
 			<trans-unit id="tsconfig.wizard.WsBulletinboardList.description">
 				<source>This outputs the entries.</source>
 			</trans-unit>
 
 			<trans-unit id="tsconfig.wizard.WsBulletinboardLatest.title">
-				<source>WapplerSystems Bulletinboard - Latest</source>
+				<source>WapplerSystems Bulletin board - Latest</source>
 			</trans-unit>
 			<trans-unit id="tsconfig.wizard.WsBulletinboardLatest.description">
 				<source>This outputs the latest X entries.</source>

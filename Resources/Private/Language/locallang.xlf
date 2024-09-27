@@ -78,6 +78,16 @@
 			<trans-unit id="controller.mailfrmt">
 				<source>E-Mail format is not valid.</source>
 			</trans-unit>
+
+			<!-- Latest file -->
+			<trans-unit id="latest.heading">
+				<target>Bulletin board</target>
+			</trans-unit>
+			<trans-unit id="latest.visit">
+				<target>Visit bulletin board</target>
+			</trans-unit>
+			<!-- Latest file -->
+
 			<!-- Flex form labels -->
 
 
