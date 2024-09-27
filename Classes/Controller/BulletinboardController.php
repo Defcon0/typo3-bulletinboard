@@ -36,7 +36,6 @@ class BulletinboardController extends AbstractController
      */
     public function listAction(int $currentPage = 1): ResponseInterface
     {
-
         $this->getTypoScriptFrontendController()->addCacheTags(['ws_bulletinboard']);
 
         $entryRepository = GeneralUtility::makeInstance(EntryRepository::class);

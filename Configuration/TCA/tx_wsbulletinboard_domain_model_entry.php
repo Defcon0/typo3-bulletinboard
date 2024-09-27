@@ -21,14 +21,15 @@ return [
         'iconfile' => 'EXT:ws_bulletinboard/Resources/Public/Icons/tx_wsbulletinboard_domain_model_entry.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, tstamp, title, fe_user, images, message, action_key, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
-    ],
-    'palettes' => [
-        '1' => ['showitem' => ''],
-
+        '0' => [
+            'showitem' => '
+         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+            sys_language_uid, l10n_parent, l10n_diffsource, tstamp, title, fe_user, images, message, action_key,
+         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
+            hidden, starttime, endtime',
+        ]
     ],
     'columns' => [
-
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
