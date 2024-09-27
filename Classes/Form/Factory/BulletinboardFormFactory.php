@@ -27,6 +27,7 @@ use WapplerSystems\WsBulletinboard\Domain\Finishers\AttachUploadsToObjectFinishe
 use WapplerSystems\WsBulletinboard\Domain\Model\Entry;
 use WapplerSystems\WsBulletinboard\Domain\Repository\EntryRepository;
 use WapplerSystems\WsBulletinboard\Event\AdjustBulletinboardFormFieldsEvent;
+use WapplerSystems\WsBulletinboard\Event\AdjustBulletinboardSaveToDatabaseFinisherOptionsEvent;
 use WapplerSystems\WsBulletinboard\Exception\MissingConfigurationException;
 use WapplerSystems\WsBulletinboard\Mvc\Validation\FileCollectionSizeValidator;
 use WapplerSystems\WsBulletinboard\Mvc\Validation\FileCountValidator;
@@ -115,13 +116,9 @@ class BulletinboardFormFactory extends AbstractFormFactory
                     'value' => 0,
                 ],
             ],
-
             'elements' => [
                 'title' => [
                     'mapOnDatabaseColumn' => 'title',
-                ],
-                'name' => [
-                    'mapOnDatabaseColumn' => 'name',
                 ],
                 'message' => [
                     'mapOnDatabaseColumn' => 'message',
@@ -136,9 +133,14 @@ class BulletinboardFormFactory extends AbstractFormFactory
             ];
         }
 
+        $event = GeneralUtility::makeInstance(AdjustBulletinboardSaveToDatabaseFinisherOptionsEvent::class, $options);
+
+        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch($event);
+
         /** @var SaveToDatabaseFinisher $saveToDatabaseFinisher */
         $saveToDatabaseFinisher = $formDefinition->createFinisher('SaveToDatabase');
-        $saveToDatabaseFinisher->setOptions($options);
+        $saveToDatabaseFinisher->setOptions($event->getOptions());
 
         /** @var AttachUploadsToObjectFinisher $attachUploadsToObjectFinisher */
         $attachUploadsToObjectFinisher = $formDefinition->createFinisher('AttachUploadsToObject');
