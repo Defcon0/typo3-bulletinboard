@@ -17,6 +17,7 @@ class Entry extends AbstractEntity
     protected $images = null;
 
     protected int $tstamp;
+    protected int $endtime = 0;
     protected bool $hidden;
     protected ?FrontendUser $feUser = null;
 
@@ -33,6 +34,11 @@ class Entry extends AbstractEntity
     public function getTstamp(): int
     {
         return $this->tstamp;
+    }
+
+    public function getEndTime(): int
+    {
+        return $this->endtime;
     }
 
     public function isHidden(): bool
