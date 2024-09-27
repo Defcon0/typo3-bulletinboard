@@ -20,7 +20,6 @@ use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 use WapplerSystems\WsBulletinboard\Domain\Model\Entry;
-use WapplerSystems\WsBulletinboard\Domain\Model\FrontendUser;
 
 class UserOwnsEntryViewHelper extends AbstractConditionViewHelper
 {
