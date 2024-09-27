@@ -1,4 +1,5 @@
 <?php
+
 namespace WapplerSystems\WsBulletinboard\Domain\Model;
 
 
@@ -101,8 +102,12 @@ class Entry extends AbstractEntity
         return $this->images;
     }
 
-  public function setHidden(bool $hidden): void
-  {
-    $this->hidden = $hidden;
-  }
+    /**
+     * @param bool $hidden
+     * @return void
+     */
+    public function setHidden(bool $hidden): void
+    {
+        $this->hidden = $hidden;
+    }
 }

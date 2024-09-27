@@ -63,7 +63,6 @@ class EntryRepository extends Repository
     {
 
         $images = $object->getImages();
-        $folder = null;
         if ($images) {
             foreach ($images as $image) {
                 /** @var FileReference $image */
