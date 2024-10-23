@@ -5,12 +5,9 @@ namespace WapplerSystems\WsBulletinboard\Form\Factory;
 
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Crypto\Random;
-use TYPO3\CMS\Core\Localization\LanguageService;
-use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MailUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Validation\Validator\NotEmptyValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator;
@@ -71,10 +68,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
         $formDefinition->setRendererClassName(FluidFormRenderer::class);
         $formDefinition->setRenderingOption('controllerAction', $currentEntry === null ? 'new' : 'edit');
         $formDefinition->setRenderingOption('additionalParams', ['entry' => $currentEntry?->getUid()]);
-        $formDefinition->setRenderingOption(
-            'submitButtonLabel',
-            $this->getLanguageService()->sL('LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang.xlf:element.Form.renderingOptions.submitButtonLabel')
-        );
+        $formDefinition->setRenderingOption('submitButtonLabel', 'Submit');
 
 
         if (empty($configuration['frameworkConfiguration']['persistence']['storagePid'])) {
@@ -237,6 +231,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
 
         /** @var Section $fieldset */
         $fieldset = $row->createElement('fieldsetEntry', 'Fieldset');
+        $fieldset->setLabel('New Bulletinboard Entry');
         $fieldset->setOptions(['properties' => [
             'gridColumnClassAutoConfiguration' => [
                 'viewPorts' => [
@@ -263,7 +258,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
     {
         /** @var GenericFormElement $element */
         $element = $fieldset->createElement('title', 'Text');
-        $element->setLabel($this->getLanguageService()->sL('LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:tx_wsbulletinboard_domain_model_entry.title'));
+        $element->setLabel('Title');
         $element->setProperty('required', true);
         $element->setDefaultValue($entry?->getTitle());
 
@@ -277,7 +272,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
     protected function addImagesElement(Section $fieldset, array $configuration, Entry $entry = null): void
     {
         $element = $fieldset->createElement('images', 'FileUpload');
-        $element->setLabel($this->getLanguageService()->sL('LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:tx_wsbulletinboard_domain_model_entry.images'));
+        $element->setLabel('Images');
         $element->setProperty('allowedMimeTypes', ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']);
         $element->setProperty('saveToFileMount', $configuration['storageFolder']);
         $element->setDefaultValue($entry?->getImages()->toArray());
@@ -333,7 +328,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
     {
         /** @var GenericFormElement $element */
         $element = $fieldset->createElement('message', 'Textarea');
-        $element->setLabel($this->getLanguageService()->sL('LLL:EXT:ws_bulletinboard/Resources/Private/Language/locallang_db.xlf:tx_wsbulletinboard_domain_model_entry.message'));
+        $element->setLabel('Message');
         $element->setProperty('rows', '4');
         $element->setProperty('elementClassAttribute', 'form-control-bstextcounter');
         $element->setProperty('fluidAdditionalAttributes', ['maxlength' => (int)($configuration['fields']['message']['maxCharacters'] ?? PHP_INT_MAX), 'minlength' => (int)($configuration['fields']['message']['minCharacters'] ?? 0)]);
@@ -401,17 +396,7 @@ class BulletinboardFormFactory extends AbstractFormFactory
             ),
             $units[$pow]
         );
+
     }
 
-    private function getLanguageService(): LanguageService
-    {
-        $request = $GLOBALS['TYPO3_REQUEST'];
-
-        $languageServiceFactory = GeneralUtility::makeInstance(LanguageServiceFactory::class);
-
-        return $languageServiceFactory->createFromSiteLanguage(
-            $request->getAttribute('language')
-            ?? $request->getAttribute('site')->getDefaultLanguage(),
-        );
-    }
 }

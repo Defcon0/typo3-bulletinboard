@@ -7,9 +7,6 @@
 			<trans-unit id="tx_wsbulletinboard_domain_model_entry">
 				<target>Schwarzes Brett</target>
 			</trans-unit>
-			<trans-unit id="tx_wsbulletinboard_domain_model_entry.title">
-				<target>Titel</target>
-			</trans-unit>
 			<trans-unit id="tx_wsbulletinboard_domain_model_entry.message">
 				<target>Nachricht</target>
 			</trans-unit>
