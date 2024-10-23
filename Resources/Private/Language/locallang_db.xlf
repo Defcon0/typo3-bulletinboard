@@ -6,8 +6,8 @@
 			<trans-unit id="tx_wsbulletinboard_domain_model_entry">
 				<source>Bulletinboard</source>
 			</trans-unit>
-			<trans-unit id="tx_wsbulletinboard_domain_model_entry.name">
-				<source>Name</source>
+			<trans-unit id="tx_wsbulletinboard_domain_model_entry.title">
+				<source>Title</source>
 			</trans-unit>
 			<trans-unit id="tx_wsbulletinboard_domain_model_entry.city">
 				<source>City</source>
